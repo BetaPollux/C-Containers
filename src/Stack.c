@@ -1,18 +1,18 @@
 #include "Stack.h"
 #include <stdlib.h>
 
-typedef struct StackItem StackItem_t;
+typedef struct StackNode StackNode_t;
 typedef struct StackStruct StackStruct_t;
 
-struct StackItem
+struct StackNode
 {
 	void *item;
-	StackItem_t *below;
+	StackNode_t *below;
 };
 
 struct StackStruct
 {
-	StackItem_t *top;
+	StackNode_t *top;
 	int count;
 };
 
@@ -45,16 +45,16 @@ int Stack_Count(Stack_t stack)
 
 int Stack_Push(Stack_t stack, void *item)
 {
-	StackItem_t *stackItem = malloc(sizeof(StackItem_t));
-	if (stackItem == NULL)
+	StackNode_t *node = malloc(sizeof(StackNode_t));
+	if (node == NULL)
 	{
 		return -1;
 	}
 
-	stackItem->item = item;
-	stackItem->below = stack->top;
+	node->item = item;
+	node->below = stack->top;
 
-	stack->top = stackItem;
+	stack->top = node;
 	stack->count++;
 
 	return 0;
@@ -62,7 +62,7 @@ int Stack_Push(Stack_t stack, void *item)
 
 void *Stack_Peek(Stack_t stack)
 {
-	if ((stack->top == NULL) || (stack->top == NULL))
+	if (stack->top == NULL)
 	{
 		return NULL;
 	}
@@ -77,14 +77,14 @@ void *Stack_Pop(Stack_t stack)
 		return NULL;
 	}
 
-	StackItem_t *oldTop = stack->top;
+	StackNode_t *node = stack->top;
 
-	stack->top = oldTop->below;
+	stack->top = node->below;
 	stack->count--;
 
-	void *result = oldTop->item;
+	void *result = node->item;
 
-	free(oldTop);
+	free(node);
 
 	return result;
 }
@@ -99,7 +99,7 @@ void Stack_Clear(Stack_t stack)
 
 bool Stack_Contains(Stack_t stack, void *item)
 {
-	StackItem_t *at = stack->top;
+	StackNode_t *at = stack->top;
 
 	while (at != NULL)
 	{

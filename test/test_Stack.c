@@ -36,7 +36,7 @@ void test_Stack_PushItemCountIsOne(void)
 	TEST_ASSERT_EQUAL_INT(1, count);
 }
 
-void test_Stack_Peek(void)
+void test_Stack_Peek_Ptr(void)
 {
 	int item = 7;
 
@@ -45,6 +45,17 @@ void test_Stack_Peek(void)
 	int *peeked = (int*)Stack_Peek(stack);
 
 	TEST_ASSERT_EQUAL_PTR(&item, peeked);
+}
+
+void test_Stack_Peek(void)
+{
+	int item = 7;
+
+	Stack_Push(stack, &item);
+
+	int peeked = *(int*)Stack_Peek(stack);
+
+	TEST_ASSERT_EQUAL_INT(item, peeked);
 }
 
 void test_Stack_Multiple(void)
@@ -84,6 +95,31 @@ void test_Stack_PopOneItem(void)
 
 	int *itemPtr = (int*)Stack_Pop(stack);
 
+	TEST_ASSERT_EQUAL_PTR(&item, itemPtr);
+}
+
+void test_Stack_PopTooMany(void)
+{
+	int item = 3;
+
+	Stack_Push(stack, &item);
+
+	Stack_Pop(stack);
+	void *ptr = Stack_Pop(stack);
+
+	TEST_ASSERT_NULL(ptr);
+}
+
+
+void test_Stack_PushPopPushPeek(void)
+{
+	int item = 3;
+
+	Stack_Push(stack, &item);
+	Stack_Pop(stack);
+	Stack_Push(stack, &item);
+	void *itemPtr = Stack_Peek(stack);
+	
 	TEST_ASSERT_EQUAL_PTR(&item, itemPtr);
 }
 
