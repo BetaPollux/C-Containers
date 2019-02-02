@@ -209,7 +209,7 @@ void test_Stack_ClearOneItem(void)
 
 	Stack_Push(stack, &itemA);
 
-	int *popA = (int*)Stack_Pop(stack);
+	Stack_Pop(stack);
 
 	int count = Stack_Count(stack);
 

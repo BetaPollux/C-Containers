@@ -198,7 +198,7 @@ void test_Queue_ClearOneItem(void)
 
 	Queue_Enqueue(queue, &itemA);
 
-	int *popA = (int*)Queue_Dequeue(queue);
+	Queue_Dequeue(queue);
 
 	int count = Queue_Count(queue);
 
