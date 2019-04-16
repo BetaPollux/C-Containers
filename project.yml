@@ -73,7 +73,7 @@
     - -Wall
     - -Wextra
     - -Wpedantic
-
+    - -std=c99
 # LIBRARIES
 # These libraries are automatically injected into the build process. Those specified as
 # common will be used in all types of builds. Otherwise, libraries can be injected in just
