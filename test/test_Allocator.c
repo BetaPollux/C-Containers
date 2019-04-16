@@ -204,7 +204,6 @@ void test_Allocator_Dynamic(void)
     int len = 32;
     char *pch = Allocator_Alloc(pAllocator, len * sizeof(char));
     
-    memset(pch, 0, len);
     strcpy(pch, "Dynamic Memory!");
 
     TEST_ASSERT_EQUAL_STRING("Dynamic Memory!", pch);
