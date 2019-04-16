@@ -1,7 +1,7 @@
 #include "unity_fixture.h"
 #include "Queue.h"
 
-TEST_GROUP(Queue)
+TEST_GROUP(Queue);
 
 Queue_t queue;
 

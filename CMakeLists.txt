@@ -48,10 +48,13 @@ foreach(p LIB BIN INCLUDE CMAKE)
 	unset (_path)
 endforeach()
 
+# Enable testing - will include tests from subdirectories
+enable_testing()
+
 # Project targets and sources
 add_subdirectory(src)
 
 # Test targets and sources
 add_subdirectory(test)
 
-enable_testing()
+
