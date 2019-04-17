@@ -57,11 +57,6 @@ target_compile_options(ContainersTestRunners
 	"-Wpedantic"
 )
 
-target_include_directories(ContainersTestRunners 
-    PUBLIC
-        /home/kuba/eclipse-workspace/C-Containers/src
-)
-
 target_link_libraries(ContainersTestRunners
     Unity
     Containers
