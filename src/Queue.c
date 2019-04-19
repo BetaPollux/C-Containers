@@ -1,5 +1,6 @@
 #include "Queue.h"
 #include <stdlib.h>
+#include <assert.h>
 
 typedef struct QueueNode QueueNode_t;
 typedef struct QueueStruct QueueStruct_t;
@@ -35,6 +36,8 @@ Queue_t Queue_Create(void)
 
 void Queue_Destroy(Queue_t queue)
 {
+	assert(queue);
+
     Queue_Clear(queue);
 
 	free(queue);
@@ -42,11 +45,15 @@ void Queue_Destroy(Queue_t queue)
 
 int Queue_Count(Queue_t queue)
 {
+	assert(queue);
+
 	return queue->count;
 }
 
 int Queue_Enqueue(Queue_t queue, void *item)
 {
+	assert(queue);
+
 	QueueNode_t *node = malloc(sizeof(QueueNode_t));
 	if (node == NULL)
 	{
@@ -72,6 +79,8 @@ int Queue_Enqueue(Queue_t queue, void *item)
 
 void *Queue_Dequeue(Queue_t queue)
 {
+	assert(queue);
+
 	if (queue->count == 0)
 	{
 		return NULL;
@@ -91,6 +100,8 @@ void *Queue_Dequeue(Queue_t queue)
 
 void *Queue_Peek(Queue_t queue)
 {
+	assert(queue);
+
 	if (queue->front == NULL)
 	{
 		return NULL;
@@ -101,6 +112,8 @@ void *Queue_Peek(Queue_t queue)
 
 void Queue_Clear(Queue_t queue)
 {
+	assert(queue);
+
 	while(queue->count > 0)
 	{
 		Queue_Dequeue(queue);
@@ -109,6 +122,8 @@ void Queue_Clear(Queue_t queue)
 
 bool Queue_Contains(Queue_t queue, void *item)
 {
+	assert(queue);
+	
 	QueueNode_t *node = queue->front;
 
 	while(node != NULL)

@@ -1,5 +1,6 @@
 #include "List.h"
 #include <stdlib.h>
+#include <assert.h>
 
 typedef struct ListNode * ListNode_t;
 typedef struct ListStruct ListStruct_t;
@@ -38,17 +39,23 @@ List_t List_Create(void)
 
 void List_Destroy(List_t list)
 {
+    assert(list);
+
     List_Clear(list);
     free(list);
 }
 
 int List_Count(List_t list)
 {
+    assert(list);
+
     return list->count;
 }
 
 void *List_Item(List_t list, int index)
 {
+    assert(list);
+
     ListNode_t node = getNodeAtAndRoot(list, index, NULL);
 
     if (node != NULL)
@@ -63,6 +70,8 @@ void *List_Item(List_t list, int index)
 
 bool List_Contains(List_t list, void *item)
 {
+    assert(list);
+
     ListNode_t node = list->start;
 
     while (node != NULL)
@@ -80,6 +89,8 @@ bool List_Contains(List_t list, void *item)
 
 int List_Add(List_t list, void *item)
 {
+    assert(list);
+
     ListNode_t node = createNode(item);
     if (node == NULL)
     {
@@ -104,6 +115,8 @@ int List_Add(List_t list, void *item)
 
 int List_InsertAt(List_t list, void *item, int index)
 {
+    assert(list);
+
     if (index > list->count)
     {
         return -1;
@@ -142,6 +155,8 @@ int List_InsertAt(List_t list, void *item, int index)
 
 void *List_RemoveAt(List_t list, int index)
 {
+    assert(list);
+
     ListNode_t rootNode;
     ListNode_t nodeToRemove = getNodeAtAndRoot(list, index, &rootNode);
     if (nodeToRemove == NULL)
@@ -176,6 +191,8 @@ void *List_RemoveAt(List_t list, int index)
 
 void List_Clear(List_t list)
 {
+    assert(list);
+
     ListNode_t node = list->start;
 
     while (node != NULL)
@@ -192,6 +209,8 @@ void List_Clear(List_t list)
 
 void *List_First(List_t list)
 {
+    assert(list);
+
     if (list->start != NULL)
     {
         return list->start->item;
@@ -202,6 +221,8 @@ void *List_First(List_t list)
 
 void *List_Last(List_t list)
 {
+    assert(list);
+
     if (list->end != NULL)
     {
         return list->end->item;
@@ -225,6 +246,8 @@ ListNode_t createNode(void *item)
 
 ListNode_t getNodeAtAndRoot(List_t list, int index, ListNode_t *root)
 {
+    assert(list);
+    
     if (index >= list->count)
     {
         if (root != NULL)

@@ -1,5 +1,6 @@
 #include "Stack.h"
 #include <stdlib.h>
+#include <assert.h>
 
 typedef struct StackNode StackNode_t;
 typedef struct StackStruct StackStruct_t;
@@ -33,6 +34,8 @@ Stack_t Stack_Create(void)
 
 void Stack_Destroy(Stack_t stack)
 {
+	assert(stack);
+
 	Stack_Clear(stack);
 
 	free(stack);
@@ -40,11 +43,15 @@ void Stack_Destroy(Stack_t stack)
 
 int Stack_Count(Stack_t stack)
 {
+	assert(stack);
+
 	return stack->count;
 }
 
 int Stack_Push(Stack_t stack, void *item)
 {
+	assert(stack);
+
 	StackNode_t *node = malloc(sizeof(StackNode_t));
 	if (node == NULL)
 	{
@@ -62,6 +69,8 @@ int Stack_Push(Stack_t stack, void *item)
 
 void *Stack_Peek(Stack_t stack)
 {
+	assert(stack);
+
 	if (stack->top == NULL)
 	{
 		return NULL;
@@ -72,6 +81,8 @@ void *Stack_Peek(Stack_t stack)
 
 void *Stack_Pop(Stack_t stack)
 {
+	assert(stack);
+
 	if (stack->top == NULL)
 	{
 		return NULL;
@@ -91,6 +102,8 @@ void *Stack_Pop(Stack_t stack)
 
 void Stack_Clear(Stack_t stack)
 {
+	assert(stack);
+
 	while(stack->count > 0)
 	{
 		Stack_Pop(stack);
@@ -99,6 +112,8 @@ void Stack_Clear(Stack_t stack)
 
 bool Stack_Contains(Stack_t stack, void *item)
 {
+	assert(stack);
+	
 	StackNode_t *at = stack->top;
 
 	while (at != NULL)

@@ -38,8 +38,8 @@ target_include_directories(Unity
 # Test Runners
 add_library(ContainersTestRunners
     STATIC
-        test_Queue_fixture.c
-        test_Queue_runner.c
+        QueueTestFixture.c
+        QueueTestRunner.c
 )
 
 set_target_properties(ContainersTestRunners
@@ -64,7 +64,7 @@ target_link_libraries(ContainersTestRunners
 
 # Test Executable
 add_executable(ContainersTest
-    test_main.c
+    TestMain.c
 )
 
 set_target_properties(ContainersTest
