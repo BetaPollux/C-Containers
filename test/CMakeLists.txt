@@ -1,14 +1,17 @@
 # Unity framework
 
+set(UNITY_HOME          /usr/local/lib/Unity/src)
+set(UNITY_FIXTURE_HOME  /usr/local/lib/Unity/extras/fixture/src)
+
 add_library(Unity
     STATIC
-        unity.c
-        unity.h
-        unity_internals.h
-        unity_fixture.c
-        unity_fixture.h
-        unity_fixture_internals.h
-        unity_fixture_malloc_overrides.h
+        ${UNITY_HOME}/unity.c
+        ${UNITY_HOME}/unity.h
+        ${UNITY_HOME}/unity_internals.h
+        ${UNITY_FIXTURE_HOME}/unity_fixture.c
+        ${UNITY_FIXTURE_HOME}/unity_fixture.h
+        ${UNITY_FIXTURE_HOME}/unity_fixture_internals.h
+        ${UNITY_FIXTURE_HOME}/unity_fixture_malloc_overrides.h
 )
 
 set_target_properties(Unity
@@ -28,8 +31,8 @@ target_compile_options(Unity
 
 target_include_directories(Unity 
     PUBLIC
-        /usr/local/lib/Unity/src
-        /usr/local/lib/Unity/extras/fixture/src
+        ${UNITY_HOME}
+        ${UNITY_FIXTURE_HOME}
 )
 
 # Test Runners
@@ -54,12 +57,17 @@ target_compile_options(ContainersTestRunners
 	"-Wpedantic"
 )
 
+target_link_libraries(ContainersTestRunners
+    Unity
+    Containers
+)
+
 # Test Executable
-add_executable(ContainerTest
+add_executable(ContainersTest
     test_main.c
 )
 
-set_target_properties(ContainerTest
+set_target_properties(ContainersTest
     PROPERTIES
         C_STANDARD 99
         C_EXTENSTIONS OFF
@@ -67,19 +75,20 @@ set_target_properties(ContainerTest
         POSITION_INDEPENDENT_CODE 1
 )
 
-target_compile_options(ContainerTest
+target_compile_options(ContainersTest
    PRIVATE
 	"-Wall"
 	"-Wextra"
 	"-Wpedantic"
 )
 
-target_link_libraries(ContainerTest
-    Unity
+target_link_libraries(ContainersTest
     ContainersTestRunners
 )
 
-# Tests
+# Test Functions
+
 add_test(
-    
+    NAME Unit-Tests
+    COMMAND $<TARGET_FILE:ContainersTest>
 )

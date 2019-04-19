@@ -5,7 +5,7 @@ static void RunAllTests(void)
     RUN_TEST_GROUP(Queue);
 }
 
-int main (argc, char *argv[])
+int main (int argc, const char *argv[])
 {
     return UnityMain(argc, argv, RunAllTests);
 }

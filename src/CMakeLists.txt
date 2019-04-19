@@ -22,3 +22,8 @@ target_compile_options(Containers
 	"-Wextra"
 	"-Wpedantic"
 )
+
+target_include_directories(Containers
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
