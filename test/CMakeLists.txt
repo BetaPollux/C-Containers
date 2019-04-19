@@ -78,3 +78,8 @@ target_link_libraries(ContainerTest
     Unity
     ContainersTestRunners
 )
+
+# Tests
+add_test(
+    
+)

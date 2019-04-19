@@ -52,6 +52,8 @@ endforeach()
 add_subdirectory(src)
 
 # Test targets and sources
+enable_testing()
+
 add_subdirectory(test)
 
-enable_testing()
+
