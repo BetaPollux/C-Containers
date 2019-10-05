@@ -1,6 +1,14 @@
+if (NOT BUILD_TESTING)
+    return()
+endif()
+
 # Unity framework
 
-set(UNITY_HOME          /usr/local/lib/Unity/src)
+if (NOT UNITY_ROOT)
+	set(UNITY_ROOT /usr/local/lib/Unity CACHE PATH "Location of Unity repo")
+endif()
+
+set(UNITY_HOME          ${UNITY_ROOT}/src)
 set(UNITY_FIXTURE_HOME  /usr/local/lib/Unity/extras/fixture/src)
 
 add_library(Unity

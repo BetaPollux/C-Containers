@@ -32,23 +32,30 @@ The C-Containers are built using cmake into a library file.
 
     > git clone https://github.com/BetaPollux/C-Containers.git
     > cd C-Containers
-    > mkdir -p build
+    > mkdir build
     > cd build
     > cmake ..
     > cmake --build .
 
-## Unit Tests (Ceedling)
+## Unit Tests (Unity Fixture)
 
-This collection uses unit tests created with the ceedling framework.
-To run the tests, you must first install ceedling, refer to https://github.com/ThrowTheSwitch/Ceedling.
+This collection uses unit tests created with the Unity Fixture framework
+To run the tests, you must first clone the Unity repo, refer to https://github.com/ThrowTheSwitch/Unity.
+By default the repo is assumed to be at /usr/local/lib/Unity.
 
-To run the tests you must first initialize the directory for ceedling.
-When prompted to overwrite the project.yml, enter no!
+The tests are run using ctest.
 
     > git clone https://github.com/BetaPollux/C-Containers.git
-    > ceedling new C-Containers
     > cd C-Containers
-    > ceedling test:all
+    > mkdir build
+    > cd build
+    > cmake ..
+    > cmake --build .
+    > ctest
 
+If Unity is not at the default location, you can configure the build using the UNITY_ROOT cache variable:
 
+    > cmake -D UNITY_ROOT=~/repos/Unity ..
 
+Note that the CMake installation of Unity is not compatible with Unity Fixture at this time!
+You must use the above method.

@@ -34,7 +34,7 @@ set (INSTALL_BINDIR
 	${CMAKE_INSTALL_BINDIR}
 	CACHE PATH "Installation directory for executables")
 set (INSTALL_INCLUDEDIR
-	${CMAKE_INSTALL_INCLUDEDIR}
+	${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
 	CACHE PATH "Installation directory for header files")
 
 set (DEF_INSTALL_CMAKEDIR share/cmake/${PROJECT_NAME})
@@ -49,6 +49,8 @@ foreach(p LIB BIN INCLUDE CMAKE)
 	message(STATUS "Installing ${p} components to ${_path}")
 	unset (_path)
 endforeach()
+
+message(STATUS ${INSTALL_INCLUDEDIR})
 
 set(WARNINGS -Wall -Wextra -Wpedantic)
 
