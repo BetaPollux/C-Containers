@@ -24,3 +24,13 @@ TEST_GROUP_RUNNER(Queue)
     RUN_TEST_CASE(Queue, Contains);
     RUN_TEST_CASE(Queue, ContainsEmpty);
 }
+
+static void RunAllTests(void)
+{
+    RUN_TEST_GROUP(Queue);
+}
+
+int main (int argc, const char *argv[])
+{
+    return UnityMain(argc, argv, RunAllTests);
+}

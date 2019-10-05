@@ -1,4 +1,4 @@
-#include "unity.h"
+#include "unity_fixture.h"
 #include "Allocator.h"
 #include <string.h>
 #include <stdlib.h>
@@ -11,16 +11,18 @@ int storage[NUM_WORDS];
 AllocatorStruct_t allocatorStruct;
 Allocator_t allocator;
 
-void setUp(void)
+TEST_GROUP(Allocator);
+
+TEST_SETUP(Allocator)
 {
     allocator = Allocator_Init(&allocatorStruct, storage, NUM_WORDS);
 }
 
-void tearDown(void)
+TEST_TEAR_DOWN(Allocator)
 {
 }
 
-void test_Allocator_Init(void)
+TEST(Allocator, Init)
 {
     TEST_ASSERT_NOT_NULL(allocator);
     TEST_ASSERT_EQUAL_INT(0, allocator->used);
@@ -29,21 +31,21 @@ void test_Allocator_Init(void)
     TEST_ASSERT_EQUAL_INT(CAPACITY, allocator->capacity);
 }
 
-void test_Allocator_InitNull(void)
+TEST(Allocator, InitNull)
 {
     Allocator_t badAllocator = Allocator_Init(NULL, storage, CAPACITY);
 
     TEST_ASSERT_NULL(badAllocator);
 }
 
-void test_Allocator_InitNullStorage(void)
+TEST(Allocator, InitNullStorage)
 {
     Allocator_t badAllocator = Allocator_Init(&allocatorStruct, NULL, CAPACITY);
 
     TEST_ASSERT_NULL(badAllocator);
 }
 
-void test_Allocator_AllocOneByte(void)
+TEST(Allocator, AllocOneByte)
 {
     int *mem = Allocator_Alloc(allocator, 1);
     int used = Allocator_Used(allocator);
@@ -52,7 +54,7 @@ void test_Allocator_AllocOneByte(void)
     TEST_ASSERT_EQUAL_INT(sizeof(int), used);
 }
 
-void test_Allocator_AllocOneWord(void)
+TEST(Allocator, AllocOneWord)
 {
     int *mem = Allocator_Alloc(allocator, sizeof(int));
     int used = Allocator_Used(allocator);
@@ -61,7 +63,7 @@ void test_Allocator_AllocOneWord(void)
     TEST_ASSERT_EQUAL_INT(sizeof(int), used);
 }
 
-void test_Allocator_AllocOneWordPlusByte(void)
+TEST(Allocator, AllocOneWordPlusByte)
 {
     int *mem = Allocator_Alloc(allocator, 1 + sizeof(int));
     int used = Allocator_Used(allocator);
@@ -70,7 +72,7 @@ void test_Allocator_AllocOneWordPlusByte(void)
     TEST_ASSERT_EQUAL_INT(2 * sizeof(int), used);
 }
 
-void test_Allocator_AllocOneWordTwice(void)
+TEST(Allocator, AllocOneWordTwice)
 {
     int *memA = Allocator_Alloc(allocator, sizeof(int));
     int *memB = Allocator_Alloc(allocator, sizeof(int));
@@ -81,7 +83,7 @@ void test_Allocator_AllocOneWordTwice(void)
     TEST_ASSERT_EQUAL_INT(2 * sizeof(int), used);
 }
 
-void test_Allocator_AllocOneWordPlusByteTwice(void)
+TEST(Allocator, AllocOneWordPlusByteTwice)
 {
     int *memA = Allocator_Alloc(allocator, 1 + sizeof(int));
     int *memB = Allocator_Alloc(allocator, 1 + sizeof(int));
@@ -92,14 +94,14 @@ void test_Allocator_AllocOneWordPlusByteTwice(void)
     TEST_ASSERT_EQUAL_INT(4 * sizeof(int), used);
 }
 
-void test_Allocator_Remaining(void)
+TEST(Allocator, Remaining)
 {
     int remaining = Allocator_Remaining(allocator);
 
     TEST_ASSERT_EQUAL_INT(CAPACITY, remaining);
 }
 
-void test_Allocator_AllocFullCapacityFromEmpty(void)
+TEST(Allocator, AllocFullCapacityFromEmpty)
 {
     int *mem = Allocator_Alloc(allocator, CAPACITY);
 
@@ -109,7 +111,7 @@ void test_Allocator_AllocFullCapacityFromEmpty(void)
     TEST_ASSERT_EQUAL_INT(0, remaining);    //fully used
 }
 
-void test_Allocator_AllocOverCapacityFromEmpty(void)
+TEST(Allocator, AllocOverCapacityFromEmpty)
 {
     int *mem = Allocator_Alloc(allocator, CAPACITY + 1);
 
@@ -119,7 +121,7 @@ void test_Allocator_AllocOverCapacityFromEmpty(void)
     TEST_ASSERT_EQUAL_INT(CAPACITY, remaining);
 }
 
-void test_Allocator_AllocOverCapacityFromPartial(void)
+TEST(Allocator, AllocOverCapacityFromPartial)
 {
     int *memA = Allocator_Alloc(allocator, 1);
     int *memB = Allocator_Alloc(allocator, CAPACITY);
@@ -131,7 +133,7 @@ void test_Allocator_AllocOverCapacityFromPartial(void)
     TEST_ASSERT_EQUAL_INT(CAPACITY - sizeof(int), remaining);
 }
 
-void test_Allocator_ClearEmpty(void)
+TEST(Allocator, ClearEmpty)
 {
     Allocator_Clear(allocator);
 
@@ -140,7 +142,7 @@ void test_Allocator_ClearEmpty(void)
     TEST_ASSERT_EQUAL_INT(CAPACITY, remaining);
 }
 
-void test_Allocator_ClearFilled(void)
+TEST(Allocator, ClearFilled)
 {
     Allocator_Alloc(allocator, CAPACITY);
     Allocator_Clear(allocator);
@@ -150,7 +152,7 @@ void test_Allocator_ClearFilled(void)
     TEST_ASSERT_EQUAL_INT(CAPACITY, remaining);
 }
 
-void test_Allocator_ClearPartialThenAlloc(void)
+TEST(Allocator, ClearPartialThenAlloc)
 {
     Allocator_Alloc(allocator, 1);
     Allocator_Clear(allocator);
@@ -162,7 +164,7 @@ void test_Allocator_ClearPartialThenAlloc(void)
     TEST_ASSERT_EQUAL_INT(0, remaining);
 }
 
-void test_Allocator_ApplicationFloats(void)
+TEST(Allocator, ApplicationFloats)
 {
     float *a = Allocator_Alloc(allocator, sizeof(float));
     float *b = Allocator_Alloc(allocator, sizeof(float));
@@ -175,7 +177,7 @@ void test_Allocator_ApplicationFloats(void)
     TEST_ASSERT_FLOAT_WITHIN(0.001f, 5.0f, sum);
 }
 
-void test_Allocator_ApplicationStrings(void)
+TEST(Allocator, ApplicationStrings)
 {
     const int len = 7;
     char *one = Allocator_Alloc(allocator, len * sizeof(char));
@@ -194,7 +196,7 @@ void test_Allocator_ApplicationStrings(void)
     TEST_ASSERT_EQUAL_STRING("Hello World", three);
 }
 
-void test_Allocator_Dynamic(void)
+TEST(Allocator, Dynamic)
 {
     int numWords = CAPACITY / sizeof(int);
     AllocatorStruct_t *pAllocatorStruct = malloc(sizeof(AllocatorStruct_t));

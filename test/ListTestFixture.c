@@ -1,4 +1,4 @@
-#include "unity.h"
+#include "unity_fixture.h"
 #include "List.h"
 
 
@@ -6,36 +6,38 @@
 
 List_t list;
 
-void setUp(void)
+TEST_GROUP(List);
+
+TEST_SETUP(List)
 {
     list = List_Create();
 }
 
-void tearDown(void)
+TEST_TEAR_DOWN(List)
 {
     List_Destroy(list);
 }
 
-void test_List_Create(void)
+TEST(List, Create)
 {
     TEST_ASSERT_NOT_NULL(list);
 }
 
-void test_List_CountEmpty(void)
+TEST(List, CountEmpty)
 {
     int count = List_Count(list);
 
     TEST_ASSERT_EQUAL_INT(0, count);
 }
 
-void test_List_ItemEmpty(void)
+TEST(List, ItemEmpty)
 {
     void *item = List_Item(list, 0);
 
     TEST_ASSERT_NULL(item);
 }
 
-void test_List_ContainsEmpty(void)
+TEST(List, ContainsEmpty)
 {
     int item = 5;
 
@@ -44,7 +46,7 @@ void test_List_ContainsEmpty(void)
     TEST_ASSERT_FALSE(contains);
 }
 
-void test_List_Add(void)
+TEST(List, Add)
 {
     int item = 3;
 
@@ -55,7 +57,7 @@ void test_List_Add(void)
     TEST_ASSERT_EQUAL_INT(1, count);
 }
 
-void test_List_Item(void)
+TEST(List, Item)
 {
     int item = 3;
 
@@ -66,7 +68,7 @@ void test_List_Item(void)
     TEST_ASSERT_EQUAL_PTR(&item, ptr);
 }
 
-void test_List_AddThree(void)
+TEST(List, AddThree)
 {
     int itemA = 3;
     int itemB = 7;
@@ -81,7 +83,7 @@ void test_List_AddThree(void)
     TEST_ASSERT_EQUAL_INT(3, count);
 }
 
-void test_List_ItemThree(void)
+TEST(List, ItemThree)
 {
     int itemA = 3;
     int itemB = 7;
@@ -100,7 +102,7 @@ void test_List_ItemThree(void)
     TEST_ASSERT_EQUAL_PTR(&itemC, ptrC);
 }
 
-void test_List_ItemOutOfRange(void)
+TEST(List, ItemOutOfRange)
 {
     int itemA = 3;
 
@@ -111,7 +113,7 @@ void test_List_ItemOutOfRange(void)
     TEST_ASSERT_NULL(ptr);
 }
 
-void test_List_InsertAt(void)
+TEST(List, InsertAt)
 {
     int itemA = 3;
     int itemB = 7;
@@ -134,7 +136,7 @@ void test_List_InsertAt(void)
     TEST_ASSERT_EQUAL_INT(3, count);
 }
 
-void test_List_InsertAtEmpty(void)
+TEST(List, InsertAtEmpty)
 {
     int itemA = 3;
 
@@ -147,7 +149,7 @@ void test_List_InsertAtEmpty(void)
     TEST_ASSERT_EQUAL_INT(1, count);
 }
 
-void test_List_InsertAtOutOfBounds(void)
+TEST(List, InsertAtOutOfBounds)
 {
     int itemA = 3;
 
@@ -159,7 +161,7 @@ void test_List_InsertAtOutOfBounds(void)
     TEST_ASSERT_EQUAL_INT(0, count);
 }
 
-void test_List_First(void)
+TEST(List, First)
 {
     int itemA = 3;
     int itemB = 7;
@@ -174,7 +176,7 @@ void test_List_First(void)
     TEST_ASSERT_EQUAL_PTR(&itemA, ptr);
 }
 
-void test_List_Last(void)
+TEST(List, Last)
 {
     int itemA = 3;
     int itemB = 7;
@@ -189,21 +191,21 @@ void test_List_Last(void)
     TEST_ASSERT_EQUAL_PTR(&itemC, ptr);
 }
 
-void test_List_FirstEmpty(void)
+TEST(List, FirstEmpty)
 {
     int *ptr = List_First(list);
 
     TEST_ASSERT_NULL(ptr);
 }
 
-void test_List_LastEmpty(void)
+TEST(List, LastEmpty)
 {
     int *ptr = List_Last(list);
 
     TEST_ASSERT_NULL(ptr);
 }
 
-void test_List_FirstAfterInsertAt(void)
+TEST(List, FirstAfterInsertAt)
 {
     int itemA = 7;
 
@@ -214,7 +216,7 @@ void test_List_FirstAfterInsertAt(void)
     TEST_ASSERT_EQUAL_PTR(&itemA, ptr);
 }
 
-void test_List_InsertAtFront(void)
+TEST(List, InsertAtFront)
 {
     int itemA = 5;
     int itemB = 7;
@@ -227,7 +229,7 @@ void test_List_InsertAtFront(void)
     TEST_ASSERT_EQUAL_PTR(&itemB, ptr);
 }
 
-void test_List_InsertAtEnd(void)
+TEST(List, InsertAtEnd)
 {
     int itemA = 5;
     int itemB = 7;
@@ -240,7 +242,7 @@ void test_List_InsertAtEnd(void)
     TEST_ASSERT_EQUAL_PTR(&itemB, ptr);
 }
 
-void test_List_FirstLastInsertAtEmpty(void)
+TEST(List, FirstLastInsertAtEmpty)
 {
     int itemA = 5;
 
@@ -253,14 +255,14 @@ void test_List_FirstLastInsertAtEmpty(void)
     TEST_ASSERT_EQUAL_PTR(&itemA, last);
 }
 
-void test_List_RemoveAtEmpty(void)
+TEST(List, RemoveAtEmpty)
 {
     void *ptr = List_RemoveAt(list, 0);
 
     TEST_ASSERT_NULL(ptr);
 }
 
-void test_List_RemoveAtOutOfBounds(void)
+TEST(List, RemoveAtOutOfBounds)
 {
     int itemA = 7;
 
@@ -271,7 +273,7 @@ void test_List_RemoveAtOutOfBounds(void)
     TEST_ASSERT_NULL(ptr);
 }
 
-void test_List_RemoveAt(void)
+TEST(List, RemoveAt)
 {
     int itemA = 3;
     int itemB = 7;
@@ -292,7 +294,7 @@ void test_List_RemoveAt(void)
     TEST_ASSERT_EQUAL_INT(2, count);
 }
 
-void test_List_RemoveAtFront(void)
+TEST(List, RemoveAtFront)
 {
     int itemA = 7;
     int itemB = 9;
@@ -311,7 +313,7 @@ void test_List_RemoveAtFront(void)
     TEST_ASSERT_EQUAL_INT(1, count);
 }
 
-void test_List_RemoveAtEnd(void)
+TEST(List, RemoveAtEnd)
 {
     int itemA = 7;
     int itemB = 9;
@@ -330,7 +332,7 @@ void test_List_RemoveAtEnd(void)
     TEST_ASSERT_EQUAL_INT(1, count);
 }
 
-void test_List_RemoveAtAllFromFront(void)
+TEST(List, RemoveAtAllFromFront)
 {
     int itemA = 7;
     int itemB = 9;
@@ -349,7 +351,7 @@ void test_List_RemoveAtAllFromFront(void)
     TEST_ASSERT_NULL(first);
 }
 
-void test_List_RemoveAtAllFromEnd(void)
+TEST(List, RemoveAtAllFromEnd)
 {
     int itemA = 7;
     int itemB = 9;
@@ -368,7 +370,7 @@ void test_List_RemoveAtAllFromEnd(void)
     TEST_ASSERT_NULL(last);
 }
 
-void test_List_Clear(void)
+TEST(List, Clear)
 {
     int itemA = 3;
     int itemB = 7;
@@ -389,7 +391,7 @@ void test_List_Clear(void)
     TEST_ASSERT_NULL(last);
 }
 
-void test_List_ClearEmpty(void)
+TEST(List, ClearEmpty)
 {
     List_Clear(list);
 
@@ -398,7 +400,7 @@ void test_List_ClearEmpty(void)
     TEST_ASSERT_EQUAL_INT(0, count);
 }
 
-void test_List_Contains(void)
+TEST(List, Contains)
 {
     int item = 9;
 
@@ -409,7 +411,7 @@ void test_List_Contains(void)
     TEST_ASSERT_TRUE(contains);
 }
 
-void test_List_ContainsMiddle(void)
+TEST(List, ContainsMiddle)
 {
     int itemA = 3;
     int itemB = 7;

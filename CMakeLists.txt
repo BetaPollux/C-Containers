@@ -14,6 +14,8 @@ endif()
 
 message(STATUS "Build type set to ${CMAKE_BUILD_TYPE}")
 
+include(CTest)
+
 # Set folder structure in build folder
 include(GNUInstallDirs)
 
@@ -48,12 +50,10 @@ foreach(p LIB BIN INCLUDE CMAKE)
 	unset (_path)
 endforeach()
 
+set(WARNINGS -Wall -Wextra -Wpedantic)
+
 # Project targets and sources
 add_subdirectory(src)
-
-# Test targets and sources
-
-#enable_testing()
-#add_subdirectory(test)
+add_subdirectory(test)
 
 

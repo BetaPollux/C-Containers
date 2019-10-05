@@ -6,6 +6,8 @@ add_library(Containers
         Queue.h
         Stack.c
         Stack.h
+        Allocator.c
+        Allocator.h
 )
 
 set_target_properties(Containers
@@ -13,14 +15,11 @@ set_target_properties(Containers
         C_STANDARD 99
         C_EXTENSTIONS OFF
         C_STANDARD_REQUIRED ON
-        POSITION_INDEPENDENT_CODE 1
 )
 
 target_compile_options(Containers
    PRIVATE
-	"-Wall"
-	"-Wextra"
-	"-Wpedantic"
+        ${WARNINGS}
 )
 
 target_include_directories(Containers

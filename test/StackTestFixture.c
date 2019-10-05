@@ -1,31 +1,33 @@
-#include "unity.h"
+#include "unity_fixture.h"
 #include "Stack.h"
 
 Stack_t stack;
 
-void setUp(void)
+TEST_GROUP(Stack);
+
+TEST_SETUP(Stack)
 {
 	stack = Stack_Create();
 }
 
-void tearDown(void)
+TEST_TEAR_DOWN(Stack)
 {
 	Stack_Destroy(stack);
 }
 
-void test_Stack_Create(void)
+TEST(Stack, Create)
 {
 	TEST_ASSERT_NOT_NULL(stack);
 }
 
-void test_Stack_InitialCountIsZero(void)
+TEST(Stack, InitialCountIsZero)
 {
 	int count = Stack_Count(stack);
 
 	TEST_ASSERT_EQUAL_INT(0, count);
 }
 
-void test_Stack_PushItemCountIsOne(void)
+TEST(Stack, PushItemCountIsOne)
 {
 	int item = 5;
 
@@ -36,7 +38,7 @@ void test_Stack_PushItemCountIsOne(void)
 	TEST_ASSERT_EQUAL_INT(1, count);
 }
 
-void test_Stack_Peek_Ptr(void)
+TEST(Stack, Peek_Ptr)
 {
 	int item = 7;
 
@@ -47,7 +49,7 @@ void test_Stack_Peek_Ptr(void)
 	TEST_ASSERT_EQUAL_PTR(&item, peeked);
 }
 
-void test_Stack_Peek(void)
+TEST(Stack, Peek)
 {
 	int item = 7;
 
@@ -58,7 +60,7 @@ void test_Stack_Peek(void)
 	TEST_ASSERT_EQUAL_INT(item, peeked);
 }
 
-void test_Stack_Multiple(void)
+TEST(Stack, Multiple)
 {
 	int item = 5;
 
@@ -73,21 +75,21 @@ void test_Stack_Multiple(void)
 	TEST_ASSERT_EQUAL(0, count);
 }
 
-void test_Stack_PeekNoItems(void)
+TEST(Stack, PeekNoItems)
 {
 	void *item = Stack_Peek(stack);
 
 	TEST_ASSERT_NULL(item);
 }
 
-void test_Stack_PopNoItems(void)
+TEST(Stack, PopNoItems)
 {
 	void *item = Stack_Pop(stack);
 
 	TEST_ASSERT_NULL(item);
 }
 
-void test_Stack_PopOneItem(void)
+TEST(Stack, PopOneItem)
 {
 	int item = 3;
 
@@ -98,7 +100,7 @@ void test_Stack_PopOneItem(void)
 	TEST_ASSERT_EQUAL_PTR(&item, itemPtr);
 }
 
-void test_Stack_PopTooMany(void)
+TEST(Stack, PopTooMany)
 {
 	int item = 3;
 
@@ -111,7 +113,7 @@ void test_Stack_PopTooMany(void)
 }
 
 
-void test_Stack_PushPopPushPeek(void)
+TEST(Stack, PushPopPushPeek)
 {
 	int item = 3;
 
@@ -123,7 +125,7 @@ void test_Stack_PushPopPushPeek(void)
 	TEST_ASSERT_EQUAL_PTR(&item, itemPtr);
 }
 
-void test_Stack_PopReducesCount(void)
+TEST(Stack, PopReducesCount)
 {
 	int item = 3;
 
@@ -136,7 +138,7 @@ void test_Stack_PopReducesCount(void)
 	TEST_ASSERT_EQUAL_INT(0, count);
 }
 
-void test_Stack_PeekDoesNotChangeCount(void)
+TEST(Stack, PeekDoesNotChangeCount)
 {
 	int item = 3;
 
@@ -148,7 +150,7 @@ void test_Stack_PeekDoesNotChangeCount(void)
 
 	TEST_ASSERT_EQUAL_INT(1, count);
 }
-void test_Stack_PeekTwice(void)
+TEST(Stack, PeekTwice)
 {
 	int item = 3;
 
@@ -160,7 +162,7 @@ void test_Stack_PeekTwice(void)
 	TEST_ASSERT_EQUAL_PTR(first, second);
 }
 
-void test_Stack_CountThreeItems(void)
+TEST(Stack, CountThreeItems)
 {
 	int itemA = 1;
 	int itemB = 2;
@@ -175,7 +177,7 @@ void test_Stack_CountThreeItems(void)
 	TEST_ASSERT_EQUAL_INT(3, count);
 }
 
-void test_Stack_PopThreeItems(void)
+TEST(Stack, PopThreeItems)
 {
 	int itemA = 1;
 	int itemB = 2;
@@ -194,7 +196,7 @@ void test_Stack_PopThreeItems(void)
 	TEST_ASSERT_EQUAL_PTR(&itemC, popC);
 }
 
-void test_Stack_ClearZeroItems(void)
+TEST(Stack, ClearZeroItems)
 {
 	Stack_Clear(stack);
 
@@ -203,7 +205,7 @@ void test_Stack_ClearZeroItems(void)
 	TEST_ASSERT_EQUAL_INT(0, count);
 }
 
-void test_Stack_ClearOneItem(void)
+TEST(Stack, ClearOneItem)
 {
 	int itemA = 1;
 
@@ -216,7 +218,7 @@ void test_Stack_ClearOneItem(void)
 	TEST_ASSERT_EQUAL_INT(0, count);
 }
 
-void test_Stack_ClearThreeItems(void)
+TEST(Stack, ClearThreeItems)
 {
 	int itemA = 1;
 	int itemB = 2;
@@ -233,7 +235,7 @@ void test_Stack_ClearThreeItems(void)
 	TEST_ASSERT_EQUAL_INT(0, count);
 }
 
-void test_Stack_ContainsFalse()
+TEST(Stack, ContainsFalse)
 {
 	int itemA = 3;
 	int itemB = 5;
@@ -247,7 +249,7 @@ void test_Stack_ContainsFalse()
 	TEST_ASSERT_FALSE(contains);
 }
 
-void test_Stack_Contains()
+TEST(Stack, Contains)
 {
 	int itemA = 3;
 	int itemB = 5;
@@ -262,7 +264,7 @@ void test_Stack_Contains()
 	TEST_ASSERT_TRUE(contains);
 }
 
-void test_Stack_ContainsEmpty(void)
+TEST(Stack, ContainsEmpty)
 {
 	int item = 7;
 

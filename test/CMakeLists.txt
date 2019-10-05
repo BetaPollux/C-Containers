@@ -19,14 +19,6 @@ set_target_properties(Unity
         C_STANDARD 99
         C_EXTENSTIONS OFF
         C_STANDARD_REQUIRED ON
-        POSITION_INDEPENDENT_CODE 1
-)
-
-target_compile_options(Unity
-   PRIVATE
-	"-Wall"
-	"-Wextra"
-	"-Wpedantic"
 )
 
 target_include_directories(Unity 
@@ -35,60 +27,38 @@ target_include_directories(Unity
         ${UNITY_FIXTURE_HOME}
 )
 
-# Test Runners
-add_library(ContainersTestRunners
-    STATIC
-        QueueTestFixture.c
-        QueueTestRunner.c
-)
+# Create Unity Test
+function(add_unity_test NAME)
+    add_executable(Test-${NAME}
+        ${NAME}TestFixture.c
+        ${NAME}TestRunner.c
+    )
 
-set_target_properties(ContainersTestRunners
-    PROPERTIES
-        C_STANDARD 99
-        C_EXTENSTIONS OFF
-        C_STANDARD_REQUIRED ON
-        POSITION_INDEPENDENT_CODE 1
-)
+    set_target_properties(Test-${NAME}
+        PROPERTIES
+            C_STANDARD 99
+            C_EXTENSTIONS OFF
+            C_STANDARD_REQUIRED ON
+    )
 
-target_compile_options(ContainersTestRunners
-   PRIVATE
-	"-Wall"
-	"-Wextra"
-	"-Wpedantic"
-)
+    target_compile_options(Test-${NAME}
+        PRIVATE
+            ${WARNINGS}
+    )
 
-target_link_libraries(ContainersTestRunners
-    Unity
-    Containers
-)
+    target_link_libraries(Test-${NAME}
+        PRIVATE
+            Unity
+            Containers
+    )
 
-# Test Executable
-add_executable(ContainersTest
-    TestMain.c
-)
+    add_test(
+        NAME Unity-Test-${NAME}
+        COMMAND $<TARGET_FILE:Test-${NAME}>
+    )
+endfunction()
 
-set_target_properties(ContainersTest
-    PROPERTIES
-        C_STANDARD 99
-        C_EXTENSTIONS OFF
-        C_STANDARD_REQUIRED ON
-        POSITION_INDEPENDENT_CODE 1
-)
-
-target_compile_options(ContainersTest
-   PRIVATE
-	"-Wall"
-	"-Wextra"
-	"-Wpedantic"
-)
-
-target_link_libraries(ContainersTest
-    ContainersTestRunners
-)
-
-# Test Functions
-
-add_test(
-    NAME Unit-Tests
-    COMMAND $<TARGET_FILE:ContainersTest>
-)
+add_unity_test(Queue)
+add_unity_test(List)
+add_unity_test(Stack)
+add_unity_test(Allocator)
