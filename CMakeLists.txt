@@ -14,6 +14,7 @@ endif()
 
 message(STATUS "Build type set to ${CMAKE_BUILD_TYPE}")
 
+option(BUILD_TESTING "" OFF)
 include(CTest)
 
 # Set folder structure in build folder
@@ -56,6 +57,7 @@ set(WARNINGS -Wall -Wextra -Wpedantic)
 
 # Project targets and sources
 add_subdirectory(src)
-add_subdirectory(test)
-
+if (BUILD_TESTING)
+    add_subdirectory(test)
+endif()
 

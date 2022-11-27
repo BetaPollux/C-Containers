@@ -1,7 +1,3 @@
-if (NOT BUILD_TESTING)
-    return()
-endif()
-
 # Unity framework
 
 if (NOT UNITY_ROOT)

@@ -26,7 +26,7 @@ The Allocator only allows freeing of the entire managed space, rather than indiv
 
 Note, the Allocator does not actually malloc or free! If providing a malloc'ed memory space, you must free that space yourself.
 
-## Build
+## Build and Install
 
 The C-Containers are built using cmake into a library file.
 
@@ -37,19 +37,25 @@ The C-Containers are built using cmake into a library file.
     > cmake ..
     > cmake --build .
 
+To install the library:
+
+    > sudo cmake --build . --target install
+
+By default the library will be installed into /usr/local/lib
+
 ## Unit Tests (Unity Fixture)
 
 This collection uses unit tests created with the Unity Fixture framework
 To run the tests, you must first clone the Unity repo, refer to https://github.com/ThrowTheSwitch/Unity.
 By default the repo is assumed to be at /usr/local/lib/Unity.
 
-The tests are run using ctest.
+The tests are not built by default, and can be run using ctest.
 
     > git clone https://github.com/BetaPollux/C-Containers.git
     > cd C-Containers
     > mkdir build
     > cd build
-    > cmake ..
+    > cmake -DBUILD_TESTING=1 ..
     > cmake --build .
     > ctest
 
